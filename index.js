@@ -5,7 +5,7 @@ const cors = require('cors');
 
 // Server variables
 const app = express();
-const PORT = process.env.port || 4000;
+const PORT = process.env.PORT || 4000;
 
 // My inports
 const schema = require('./schema/schema');
