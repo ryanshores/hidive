@@ -3,7 +3,9 @@ const graphql = require('graphql');
 const _ = require('lodash');
 
 // Importing json object from another file for now
-const db = require('../database/database');
+const db = require('../database/dashboard');
+
+const titleRows = db.Data.TitleRows;
 
 const {
   GraphQLObjectType,
@@ -11,6 +13,7 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLList,
+  GraphQLInt,
 } = graphql;
 
 const TitleType = new GraphQLObjectType({
@@ -26,36 +29,44 @@ const TitleType = new GraphQLObjectType({
   }),
 });
 
+const TitleRowType = new GraphQLObjectType({
+  name: 'TitleRow',
+  fields: () => ({
+    Name: { type: GraphQLString },
+    Titles: {
+      type: new GraphQLList(TitleType),
+      args: { number: { type: GraphQLInt } },
+      resolve(parent, args) {
+        return parent.Titles;
+      },
+    },
+  }),
+});
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
     row: {
-      type: GraphQLList(TitleType),
+      type: TitleRowType,
       args: { row: { type: GraphQLString } },
       resolve(parent, args) {
-        return _.filter(db, { [args.row]: true });
+        return _.find(titleRows, { Name: args.row });
       },
     },
     title: {
       type: TitleType,
-      args: { id: { type: GraphQLID } },
+      args: {
+        row: { type: GraphQLString },
+        id: { type: GraphQLID },
+      },
       resolve(parent, args) {
-        return _.find(db, { Id: _.toInteger(args.id) });
+        const row = _.find(titleRows, { Name: args.row });
+        return _.find(row.Titles, { Id: args.id });
       },
     },
     titles: {
-      type: GraphQLList(TitleType),
-      resolve() {
-        return db;
-      },
-    },
-    // Not complete yet, returning only for full name
-    titleSearch: {
-      type: GraphQLList(TitleType),
-      args: { name: { type: GraphQLString } },
-      resolve(parent, args) {
-        return _.filter(db, { Name: args.name });
-      },
+      type: TitleType,
+      args: {},
     },
   },
 });
