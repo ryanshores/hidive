@@ -1,9 +1,9 @@
 import React from 'react';
 import NavLink from './NavLink/NavLink';
 
-const navLinks = (props) => {
+const navLinks = () => {
 	return (
-		<div className="collapse navbar-collapse">
+		<div className="collapse navbar-collapse" id="links">
 			<ul className="navbar-nav">
 				<NavLink to='simulcasts'/>
 				<NavLink to='dubs'/>
