@@ -1,0 +1,23 @@
+.titleContainer {
+	width: 100%;
+	height: auto;
+	padding: 10px;
+}
+
+.titlePreview {
+	position: relative;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.titlePreview img {
+	width: 100%;
+	z-index: 0;
+}
+
+.titlePreview h4 {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 1;
+}

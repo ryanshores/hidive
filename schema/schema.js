@@ -40,6 +40,7 @@ const RootQuery = new GraphQLObjectType({
       type: TitleType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
+        // Need to fix args.id coming though as a string
         return _.find(db, { Id: _.toInteger(args.id) });
       },
     },
