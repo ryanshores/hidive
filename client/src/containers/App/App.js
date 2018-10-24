@@ -1,35 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { graphql } from 'react-apollo';
 import './App.css';
 
+import { getVideos } from '../../queries/queries';
+
 import Header from '../../components/Header/Header';
-import Trial from '../../components/Trial/Trial';
-import Banner from '../../components/Banner/Banner';
-import Home from '../Home/Home';
+import HomeList from '../VideoList/HomeList';
+import VideoList from '../VideoList/VideoList';
 
-// apollo client setup
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-});
+class App extends Component {
+  state = {
+    titles: []
+  }
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <Router className="Router">
-      <div className="App">
-        <Header />
-        <div className="container-fluid">
-          <div className="content">
-            <Trial />
-            <Banner />
-            <Route path="/" component={Home} />
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.props.data !== prevProps.data){
+      if(this.props.data.titles) {
+        this.setState({titles: this.props.data.titles})
+      }
+    }
+  }
+
+  render() { 
+    const { titles } = this.state;
+    const titlesObject = {
+      simulcasts: titles.filter(title => title.isSimulcast),
+      dubs: titles.filter(title => title.isDubed),
+      exclusive: titles.filter(title => title.isExclusive),
+      recent: titles.filter(title => title.isRecent),
+      trending: titles.filter(title => title.isTrending),
+      popular: titles.filter(title => title.isPopular),
+      movies: titles.filter(title => {
+        if(
+          title.ShowInfoTitle.indexOf('Theatrical') === 0 ||
+          title.ShowInfoTitle.indexOf('OVA') === 0 ||
+          title.ShowInfoTitle.indexOf('Special') === 0
+        ) {
+          return true
+        } else {
+          return false
+        }
+      }),
+      series: titles.filter(title => {
+        if(
+          title.ShowInfoTitle.indexOf('Season') === 0 ||
+          title.ShowInfoTitle.indexOf('Shorts') === 0 ||
+          title.ShowInfoTitle.indexOf('Knight') === 0 ||
+          title.ShowInfoTitle.indexOf('Rondo') === 0
+        ) {
+          return true
+        } else {
+          return false
+        }
+      }),
+      continueWatching: titles.filter(title => title.IsContinueWatching),
+    }
+    return (
+      <Router className="Router">
+        <div className="App">
+          <Header />
+          <div className="container-fluid fadeIn">
+            <div className="content">
+              <Route exact path='/' render={() => <HomeList titles={titlesObject}/>}/>
+              {
+                Object.keys(titlesObject).map(key => (
+                  <Route 
+                    key={key}
+                    path={'/' + key} 
+                    render={() => <VideoList id={key} titles={titlesObject[key]}/>} />
+                ))
+              }
+            </div>
           </div>
         </div>
-      </div>
-    </Router>
-  </ApolloProvider>
-);
-
-export default App;
+      </Router>
+    );
+  }
+}
+ 
+export default graphql(getVideos)(App);

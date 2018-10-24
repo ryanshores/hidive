@@ -1,0 +1,104 @@
+.titleDetails {
+	height: 400px;
+	padding: 10px;
+}
+
+.detailsContainer {
+	height: 100%;
+	border-radius: 5px;
+	overflow: hidden;
+	position: relative;
+}
+
+.loading {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.titleDetails .imageContainer {
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+.centerContainer {
+	position: absolute;
+	display: flex;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background-image: linear-gradient(to right, #000000ee, #000000aa, #00000000);
+}
+
+.leftContainer {
+	width: 60%;
+	padding: 15px 0px 10px 15px;
+	text-shadow: 2px 2px 2px #333;
+}
+
+.leftContainer h1 {
+	font-size: 2rem;
+	color: #00aef0;
+	margin-bottom: 0;
+}
+
+.leftContainer p {
+	margin-bottom: 10px;
+}
+
+.actions button {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding: 0px 5px;
+	text-transform: uppercase;
+	background: #00aef0;
+	text-shadow: 1px 1px 1px #00000050;
+	transition: background 0.2s;
+}
+
+.actions button:hover {
+	outline: none;
+	background: #0087bd;
+}
+
+.synopsis {
+	margin-bottom: 20px;
+	text-transform: none;
+}
+
+.date p {
+	margin-bottom: 0;
+	text-transform: none;
+}
+
+.rightContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40%;
+}
+
+.exitButton {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	font-size: 2rem;
+	color: #ffffff50;
+}
+
+.playButton {
+	font-size: 4rem;
+	text-shadow: 0 0 3px #000;
+	transition: all 0.1s;
+}
+
+.playButton:hover {
+	text-shadow: 0 0 10px #000;
+	color: #00aef0;
+}

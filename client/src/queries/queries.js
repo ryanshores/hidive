@@ -1,13 +1,46 @@
 import { gql } from 'apollo-boost';
 
-const getRowQuery = gql`
-	query($rowString: String!) {
-		row(row: $rowString) {
-			Id
-			Name
-			MasterArtUrl
-		}
+const getVideos = gql`
+{
+	titles {
+		Name
+		Id
+		MasterArtUrl
+		IsContinueWatching
+		isSimulcast
+		isDubed
+		isExclusive
+		isRecent
+		isTrending
+		isPopular
+		ShowInfoTitle
 	}
+}
 `;
 
-export { getRowQuery };
+const getTitleDetails = gql`
+query($id: ID) {
+	title(id: $id) {
+		Id
+		Name
+		MediumSynopsis
+		KeyArtUrl
+		SeasonName
+		InQueue
+		IsFavorite
+		FirstPremiereDate
+		Rating
+	}
+}
+`;
+
+const videoSearch = gql`
+query($name: String) {
+	titleSearch(name: $name) {
+		Id
+		Name
+	}
+}
+`;
+
+export { getTitleDetails, getVideos, videoSearch };

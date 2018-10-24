@@ -11,6 +11,7 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLList,
+  GraphQLBoolean,
 } = graphql;
 
 const TitleType = new GraphQLObjectType({
@@ -23,19 +24,26 @@ const TitleType = new GraphQLObjectType({
     LongSynopsis: { type: GraphQLString },
     KeyArtUrl: { type: GraphQLString },
     MasterArtUrl: { type: GraphQLString },
+    IsContinueWatching: { type: GraphQLBoolean },
+    IsFavorite: { type: GraphQLBoolean },
+    InQueue: { type: GraphQLBoolean },
+    isSimulcast: { type: GraphQLBoolean },
+    isDubed: { type: GraphQLBoolean },
+    isExclusive: { type: GraphQLBoolean },
+    isRecent: { type: GraphQLBoolean },
+    isTrending: { type: GraphQLBoolean },
+    isGaiden: { type: GraphQLBoolean },
+    isPopular: { type: GraphQLBoolean },
+    ShowInfoTitle: { type: GraphQLString },
+    SeasonName: { type: GraphQLString },
+    FirstPremiereDate: { type: GraphQLString },
+    Rating: { type: GraphQLString },
   }),
 });
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-    row: {
-      type: GraphQLList(TitleType),
-      args: { row: { type: GraphQLString } },
-      resolve(parent, args) {
-        return _.filter(db, { [args.row]: true });
-      },
-    },
     title: {
       type: TitleType,
       args: { id: { type: GraphQLID } },
@@ -55,7 +63,9 @@ const RootQuery = new GraphQLObjectType({
       type: GraphQLList(TitleType),
       args: { name: { type: GraphQLString } },
       resolve(parent, args) {
-        return _.filter(db, { Name: args.name });
+        // return _.filter(db, { Name: args.name });
+        // return db.filter(title => _.find(title, { Name: args.name }));
+        return db.filter(title => title.Name.toLowerCase().indexOf(args.name.toLowerCase()) !== -1);
       },
     },
   },

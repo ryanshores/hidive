@@ -10,9 +10,53 @@ body {
   background: url(//d10xkldqejj5hr.cloudfront.net/content/images/HD_sitebackimage_5_poster3_compressed.jpg) repeat-x rgb(0,0,0);
   background-position: left top;
   background-attachment: fixed;
+  text-transform: uppercase;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.load {
+  text-align: center;
+  padding: 100px;
+}
+
+.line {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background-color: #4b9cdb;
+}
+
+.load .line:nth-last-child(1) {animation: loadingC .6s .1s linear infinite;}
+.load .line:nth-last-child(2) {animation: loadingC .6s .2s linear infinite;}
+.load .line:nth-last-child(3) {animation: loadingC .6s .3s linear infinite;}
+
+.fadeIn {
+	animation: fadein 1s;
+}
+
+.fadeOut {
+  animation: fadeout 1s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  20% { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@keyframes fadeout {
+  from { opacity: 1; }
+  20% { opacity: 1; }
+	to   { opacity: 0; }
+}
+
+@keyframes loadingC {
+  0 {transform: translate(0,0);}
+  50% {transform: translate(0,15px);}
+  100% {transform: translate(0,0);}
 }

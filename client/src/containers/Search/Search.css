@@ -1,0 +1,22 @@
+.searchContainer {
+	position: relative;
+}
+
+.searchList {
+	list-style: none;
+	background: #000000bb;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	max-height: 300px;
+	overflow: scroll;
+	padding-top: 10px;
+	padding-left: 10px;
+	width: 400px;
+}
+
+.searchResult {
+	color: white;
+	border-bottom: 1px solid black;
+	padding: 5px;
+}
