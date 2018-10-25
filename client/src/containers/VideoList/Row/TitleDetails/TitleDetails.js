@@ -8,16 +8,6 @@ import { getTitleDetails } from '../../../../queries/queries';
 class TitleDetails extends Component {
 	state = {
 		title: {},
-		exampleTitle: {
-			FirstPremiereDate: "2018-07-03T15:00:00",
-			Id: "862",
-			InQueue: false,
-			IsFavorite: false,
-			KeyArtUrl: "//d10xkldqejj5hr.cloudfront.net/titles/TNM/TNM_01_KEY_1200x450.jpg",
-			MediumSynopsis: "The masses are suffering under the rule of the tyrannical World Empire, and the only ones who can stand against the regime and fight for freedom are a ragtag resistance group armed only with antique guns.",
-			Name: "The Thousand Musketeers",
-			SeasonName: "Season 1",
-		},
 		classes: 'fadeIn'
 	}
 
@@ -30,9 +20,29 @@ class TitleDetails extends Component {
 		this.setTitleToState();
 	}
 
+	handleAddToQueue = () => {
+		const title = {
+			...this.state.title,
+			ContinueWatching: {...this.state.title.ContinueWatching},
+			InQueue: true
+		};
+		console.log({title});
+		this.setState({title});
+	}
+	
+	handleAddToFavorites = () => {
+		const title = {
+			...this.state.title,
+			ContinueWatching: {...this.state.title.ContinueWatching},
+			IsFavorite: true
+		};
+		console.log({title});
+		this.setState({title})
+	}
+	
 	setTitleToState = () => {
 		const { data } = this.props;
-		if( data.loading || !data.title || ( data.title === this.state.title ) ) return;
+		if( data.loading || !data.title || ( data.title.Id === this.state.title.Id ) ) return;
 		this.setState({
 			title: data.title,
 			classes: 'fadeIn'
@@ -54,7 +64,11 @@ class TitleDetails extends Component {
 				<div className="detailsContainer">
 					<div className={classes}>
 						<BackgroundImage imageURL={title.KeyArtUrl} altText={title.Name} />
-						<Center title={title} cancel={this.closeDetailsHandler} />
+						<Center 
+							title={title} 
+							cancel={this.closeDetailsHandler} 
+							addToQueue={this.handleAddToQueue} 
+							addToFavorite={this.handleAddToFavorites}/>
 					</div>
 				</div>
 			</div>
@@ -68,18 +82,22 @@ const BackgroundImage = ({imageURL, altText}) => (
 	</div>
 );
 
-const Center = ({ title, cancel }) => (
+const Center = ({ title, cancel, addToQueue, addToFavorite }) => (
 	<div className="centerContainer">
-		<LeftSide title={title}/>
+		<LeftSide title={title} addToQueue={addToQueue} addToFavorite={addToFavorite}/>
 		<RightSide cancel={cancel}/>
 	</div>
 );
 
-const LeftSide = ({ title }) => (
+const LeftSide = ({ title, addToQueue, addToFavorite }) => (
 	<div className="leftContainer">
 		<h1>{title.Name}</h1>
 		<p>{title.SeasonName}</p>
-		<Actions />
+		<Actions 
+			queued={title.InQueue} 
+			favorited={title.IsFavorite} 
+			addToQueue={addToQueue} 
+			addToFavorite={addToFavorite}/>
 		<Synopsis synopsis={title.MediumSynopsis}/>
 		<DateComponent date={title.FirstPremiereDate} />
 		<p>Rating: {title.Rating}</p>
@@ -87,10 +105,19 @@ const LeftSide = ({ title }) => (
 	</div>
 );
 
-const Actions = () => (
+const Actions = ({queued, favorited, addToQueue, addToFavorite}) => (
 	<div className='actions'>
-		<button className="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Queue</button>
-		<button className="btn btn-primary btn-sm"><i class="fas fa-heart"></i> Favorite</button>
+		<button className="btn btn-info btn-sm" onClick={addToQueue}>
+			{ queued ? <i className="fas fa-check"></i> : 
+			<i className="fas fa-plus-circle"></i> }
+			Queue
+		</button>
+		<button className="btn btn-info btn-sm" onClick={addToFavorite}>
+			{ favorited ? <i className="fas fa-check"></i> :
+			<i className="fas fa-heart"></i>
+			}
+			Favorite
+		</button>
 	</div>
 )
 
