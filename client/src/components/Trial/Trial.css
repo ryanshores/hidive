@@ -3,4 +3,10 @@
 	background-color: rgba(0,174,240,1);
 	color: white;
 	text-align: center;
+	padding-top: 3px;
+	text-shadow: 1px 1px 2px black;
+}
+
+.trial b {
+	cursor: pointer;
 }
