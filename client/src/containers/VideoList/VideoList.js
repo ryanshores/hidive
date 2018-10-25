@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Row from './Row/Row';
 import Banner from '../../components/Banner/Banner';
+
+const bannerImages = {
+	simulcasts: '//d10xkldqejj5hr.cloudfront.net/slides/2018/10/HIDIVE_HeaderImage_VISITOR_SimulcastSection_BloomIntoYou_1140x275_UpdatedEngLogo.jpg',
+	dubs: '//d10xkldqejj5hr.cloudfront.net/slides/2018/10/HIDIVE_HeaderImage_VISITOR_DubSeriesSection_TadaNeverFallsinLove_1140x275.jpg',
+	exclusive: '//d10xkldqejj5hr.cloudfront.net/slides/2018/09/HIDIVE_HeaderImage_VISITOR_Exclusives_TheBigO_1140x275.jpg',
+	recent: '',
+	trending: '//d10xkldqejj5hr.cloudfront.net/slides/2018/09/HIDIVE_HeaderImage_VISITOR_Trending_TadaNeverFallsinLove_1140x275.jpg',
+	popular: '//d10xkldqejj5hr.cloudfront.net/slides/HIDIVE_HeaderImage_StreamYour_MostPopular_Made-in-Abyss_1140x275.jpg',
+	movies: '//d10xkldqejj5hr.cloudfront.net/slides/HIDIVE_HeaderImage_StreamYour_MostPopular_Made-in-Abyss_1140x275.jpg',
+	series: '//d10xkldqejj5hr.cloudfront.net/slides/2018/10/HIDIVE_HeaderImage_VISITOR_TVSeriesSection_Parasyte_1140x275_2.jpg',
+};
 
 class VideoList extends Component {
 	state = {
@@ -10,16 +22,7 @@ class VideoList extends Component {
 		rows: 0,
 		length: 0,
 		showDetails: [],
-		bannerImages: {
-			simulcasts: '//d10xkldqejj5hr.cloudfront.net/slides/2018/10/HIDIVE_HeaderImage_VISITOR_SimulcastSection_BloomIntoYou_1140x275_UpdatedEngLogo.jpg',
-			dubs: '//d10xkldqejj5hr.cloudfront.net/slides/2018/10/HIDIVE_HeaderImage_VISITOR_DubSeriesSection_TadaNeverFallsinLove_1140x275.jpg',
-			exclusive: '//d10xkldqejj5hr.cloudfront.net/slides/2018/09/HIDIVE_HeaderImage_VISITOR_Exclusives_TheBigO_1140x275.jpg',
-      recent: '',
-      trending: '//d10xkldqejj5hr.cloudfront.net/slides/2018/09/HIDIVE_HeaderImage_VISITOR_Trending_TadaNeverFallsinLove_1140x275.jpg',
-      popular: '//d10xkldqejj5hr.cloudfront.net/slides/HIDIVE_HeaderImage_StreamYour_MostPopular_Made-in-Abyss_1140x275.jpg',
-      movies: '//d10xkldqejj5hr.cloudfront.net/slides/HIDIVE_HeaderImage_StreamYour_MostPopular_Made-in-Abyss_1140x275.jpg',
-      series: '//d10xkldqejj5hr.cloudfront.net/slides/2018/10/HIDIVE_HeaderImage_VISITOR_TVSeriesSection_Parasyte_1140x275_2.jpg',
-		},
+		bannerImages,
 	}
 
 	componentDidMount() {
@@ -47,6 +50,8 @@ class VideoList extends Component {
 		this.setState({showDetails: newArray});
 	}
 
+	// Updates the window size dimensions and sets the number of videos to show in a row
+	// Also closes and showing title details
 	updateWindowDimensions() {
 		const width = window.innerWidth;
 		const height = window.innerHeight;
@@ -71,8 +76,7 @@ class VideoList extends Component {
 
 	render() { 
 		const { rows, length, showDetails, bannerImages } = this.state;
-		const { titles, id } = this.props;
-		console.log(bannerImages[id])
+		const { titles, rowid } = this.props;
 		let rowObjects = [];
 		for( let i = 0; i < rows; i++) {
 			rowObjects.push(
@@ -87,11 +91,16 @@ class VideoList extends Component {
 		}
 		return (
 			<div className="List fadeIn">
-				<Banner images={[bannerImages[id]]} />
+				<Banner images={[bannerImages[rowid]]} />
 				{rowObjects}
 			</div>
 		);
 	}
+}
+
+VideoList.propTypes = {
+	titles: PropTypes.array,
+	rowid: PropTypes.string
 }
  
 export default VideoList;

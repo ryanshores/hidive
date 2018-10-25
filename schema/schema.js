@@ -14,6 +14,7 @@ const {
   GraphQLBoolean,
 } = graphql;
 
+// Title Object - defines what can be returned from title query
 const TitleType = new GraphQLObjectType({
   name: 'Title',
   fields: () => ({
@@ -41,6 +42,8 @@ const TitleType = new GraphQLObjectType({
   }),
 });
 
+// Root Object - defines what queries can be requested
+// Handles finding the requested object and points to the title object to parse
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -48,29 +51,29 @@ const RootQuery = new GraphQLObjectType({
       type: TitleType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        // Need to fix args.id coming though as a string
+        // args.id coming though as a string
         return _.find(db, { Id: _.toInteger(args.id) });
       },
     },
     titles: {
       type: GraphQLList(TitleType),
       resolve() {
+        // returns all titles
         return db;
       },
     },
-    // Not complete yet, returning only for full name
     titleSearch: {
       type: GraphQLList(TitleType),
       args: { name: { type: GraphQLString } },
       resolve(parent, args) {
-        // return _.filter(db, { Name: args.name });
-        // return db.filter(title => _.find(title, { Name: args.name }));
+        // Searches for args.name in title.Name
         return db.filter(title => title.Name.toLowerCase().indexOf(args.name.toLowerCase()) !== -1);
       },
     },
   },
 });
 
+// Attaches the RootQuery to GraphQL
 module.exports = new GraphQLSchema({
   query: RootQuery,
 });

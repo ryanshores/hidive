@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Title.css'
 
 const title = ({ title, clicked, highlighted }) => {
@@ -6,9 +7,7 @@ const title = ({ title, clicked, highlighted }) => {
 		<div className="titleContainer">
 			<div className='titleContent' onClick={clicked}>
 				<Border highlighted={highlighted}/>
-				<div className="imageContainer">
-					<img src={title.MasterArtUrl} alt=""/>
-				</div>
+				<ImageContainer title={title}/>
 				{ 
 					highlighted ? 
 					null : 
@@ -18,6 +17,12 @@ const title = ({ title, clicked, highlighted }) => {
 		</div>
 	);
 }
+
+const ImageContainer = ({title}) => (
+	<div className="imageContainer">
+		<img src={title.MasterArtUrl} alt="title"/>
+	</div>
+);
 
 const HoverContainer = ({title}) => (
 	<div className="hoverContainer">
@@ -38,5 +43,11 @@ const HoverContainer = ({title}) => (
 const Border = ({highlighted}) => (
 	<div className={highlighted ? 'borderHighlight' : null}></div>
 );
+
+title.propTypes = {
+	title: PropTypes.object, 
+	clicked: PropTypes.func, 
+	highlighted: PropTypes.bool,
+}
  
 export default title;

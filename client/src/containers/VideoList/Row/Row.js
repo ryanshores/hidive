@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import './Row.css';
 
-import Title from './Title/Title';
+import Title from '../../../components/Title/Title';
 import TitleDetails from './TitleDetails/TitleDetails';
 
 class Row extends Component {
@@ -76,5 +77,12 @@ const getSlickSettings = (props) => ({
 		},
 	]
 })
+
+Row.propTypes = {
+	name: PropTypes.string, 
+	titles: PropTypes.array, 
+	showDetails: PropTypes.bool, 
+	cancelShowing: PropTypes.func,
+}
  
 export default Row;

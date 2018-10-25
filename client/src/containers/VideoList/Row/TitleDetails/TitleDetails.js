@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import moment from 'moment';
 import './TitleDetails.css';
@@ -13,13 +14,14 @@ class TitleDetails extends Component {
 
 	componentWillMount() {
 		this.setTitleToState();
-
 	}
 	
 	componentDidUpdate() {
 		this.setTitleToState();
 	}
 
+	// Temporarily sets queue to true
+	// In production will send post to server
 	handleAddToQueue = () => {
 		const title = {
 			...this.state.title,
@@ -29,7 +31,8 @@ class TitleDetails extends Component {
 		console.log({title});
 		this.setState({title});
 	}
-	
+
+	// Temporarily sets favorte to true
 	handleAddToFavorites = () => {
 		const title = {
 			...this.state.title,
@@ -40,6 +43,7 @@ class TitleDetails extends Component {
 		this.setState({title})
 	}
 	
+	// Sets query data to state if exists
 	setTitleToState = () => {
 		const { data } = this.props;
 		if( data.loading || !data.title || ( data.title.Id === this.state.title.Id ) ) return;
@@ -49,6 +53,7 @@ class TitleDetails extends Component {
 		});
 	}
 
+	// Sets fadeout for animation and then sends close details function
 	closeDetailsHandler = () => {
 		// set slideclose for transition
 		this.setState({ classes: 'fadeOut'})
@@ -144,6 +149,10 @@ const RightSide = ({cancel}) => (
 		</div>
 	</div>
 );
+
+TitleDetails.propTypes = {
+	cancel: PropTypes.func
+}
 
 const options = {
 	options: props => {

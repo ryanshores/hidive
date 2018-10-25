@@ -16,6 +16,8 @@ class Search extends Component {
 		this.setQueryValue();
 	}
 
+	// Delays the setting of the query value
+	// This delays the search but reduces amount of server requests
 	setQueryValue = () => {
 		let timeout;
 		clearTimeout(timeout);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import './Banner.css';
 
@@ -15,7 +16,7 @@ const banner = ({images}) => {
     arrows: false
   };
 
-  const imageItems = images.map(image => <img className="img-fluid" key={image} src={image} alt="banner" />)
+  const imageItems = makeImageItems(images)
 
   return (
     <div className="Banner">
@@ -25,5 +26,11 @@ const banner = ({images}) => {
     </div>
   );
 };
+
+const makeImageItems = (images) => images.map(image => <img className="img-fluid" key={image} src={image} alt="banner" />);
+
+banner.propTypes = {
+  images: PropTypes.array
+}
 
 export default banner;
