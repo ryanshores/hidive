@@ -4,7 +4,7 @@
   "description": "backend to hidive",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/.bin/mocha test/test.js",
     "server": "node index.js",
     "client": "cd client && yarn start",
     "dev": "concurrently --delay 1500ms --kill-others-on-fail \"yarn server\" \"yarn client\"",
@@ -23,7 +23,9 @@
     "express-graphql": "^0.6.12",
     "graphql": "^14.0.2",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2"
+    "mocha": "^5.2.0",
+    "moment": "^2.22.2",
+    "supertest": "^3.3.0"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",

@@ -39,4 +39,6 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-app.listen(PORT, () => console.log(`Server is started on port: ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Server is started on port: ${PORT}`));
+
+module.exports = server;
