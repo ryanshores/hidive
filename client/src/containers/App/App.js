@@ -11,46 +11,70 @@ import VideoList from '../VideoList/VideoList';
 
 class App extends Component {
   state = {
-    titles: []
+    titles: [],
+    loading: true
   }
 
   // Checks if the props have changed and if the title object exists
   componentDidUpdate(prevProps) {
     if(this.props.data !== prevProps.data){
       if(this.props.data.titles) {
-        this.setState({titles: this.props.data.titles})
+        this.setState({
+          titles: this.props.data.titles,
+          loading: false
+        })
       }
     }
   }
 
   render() { 
-    const { titles } = this.state;
+    const { titles, loading } = this.state;
     const titlesObject = setupTitlesObject(titles);
     return (
       <Router className="Router">
         <div className="App">
           <Header />
-          <Content titlesObject={titlesObject}/>
+          <Content 
+            titlesObject={titlesObject}
+            loading={loading}/>
         </div>
       </Router>
     );
   }
 }
 
-const Content = ({titlesObject}) => {
+const Content = ({titlesObject, loading}) => {
+  return (
+    <div className="container-fluid fadeIn">
+      <div className="content">
+        { loading ? Loading() : Routes(titlesObject) }
+      </div>
+    </div>
+  )
+};
+
+const Routes = (titlesObject) => {
   const keys = titlesKeys(titlesObject);
-  const Routes = keys.map(key => (
+  const RoutesObjects = keys.map(key => (
     <Route 
       key={key}
       path={'/' + key} 
       render={() => <VideoList rowid={key} titles={titlesObject[key]}/>} />
   ));
   return (
-    <div className="container-fluid fadeIn">
-      <div className="content">
-        <Route exact path='/' render={() => <HomeList titles={titlesObject}/>}/>
-        { Routes }
-      </div>
+    <div>
+      <Route exact path='/' render={() => <HomeList titles={titlesObject}/>}/>
+      { RoutesObjects }
+    </div>
+  )
+};
+
+const Loading = () => {
+  return (
+    <div className='load'>
+      <div className="line"></div>
+      <div className="line"></div>
+      <div className="line"></div>
     </div>
   )
 };

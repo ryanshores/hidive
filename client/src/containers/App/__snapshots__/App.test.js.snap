@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div
+  className="App"
+>
+  <nav
+    className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+  >
+    <div
+      className="container-fluid"
+    >
+      <button
+        className="navbar-toggler"
+        data-target="#links"
+        data-toggle="collapse"
+        type="button"
+      >
+        <span
+          className="navbar-toggler-icon"
+        />
+      </button>
+      <a
+        className="navbar-brand"
+        href="/"
+        onClick={[Function]}
+      >
+        <img
+          alt="HiDive"
+          src="http://d10xkldqejj5hr.cloudfront.net/content/images/HIDIVE_logo.svg"
+          width="140"
+        />
+      </a>
+      <div
+        className="collapse navbar-collapse"
+        id="links"
+      >
+        <ul
+          className="navbar-nav"
+        >
+          <li
+            className="nav-item active"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/simulcasts"
+              onClick={[Function]}
+            >
+              simulcasts
+            </a>
+          </li>
+          <li
+            className="nav-item active"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/dubs"
+              onClick={[Function]}
+            >
+              dubs
+            </a>
+          </li>
+          <li
+            className="nav-item active"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/movies"
+              onClick={[Function]}
+            >
+              movies
+            </a>
+          </li>
+          <li
+            className="nav-item active"
+          >
+            <a
+              aria-current={null}
+              className="nav-link"
+              href="/series"
+              onClick={[Function]}
+            >
+              series
+            </a>
+          </li>
+        </ul>
+        <div
+          className="searchContainer ml-auto"
+        >
+          <form
+            className="form-inline my-2 my-lg-0"
+            onSubmit={[Function]}
+          >
+            <input
+              aria-label="Search"
+              className="form-control mr-sm-2"
+              name="search"
+              onChange={[Function]}
+              placeholder="Search"
+              type="search"
+              value=""
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="container-fluid fadeIn"
+  >
+    <div
+      className="content"
+    >
+      <div
+        className="load"
+      >
+        <div
+          className="line"
+        />
+        <div
+          className="line"
+        />
+        <div
+          className="line"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
