@@ -41,7 +41,7 @@ code {
 }
 
 .fadeOut {
-  animation: fadeout 1s;
+  animation: fadeout 0.8s;
 }
 
 @keyframes fadein {
